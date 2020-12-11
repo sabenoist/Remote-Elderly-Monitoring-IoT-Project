@@ -1,4 +1,4 @@
-# Internet of Things Dashboard Project
+# Remote Elderly Monitoring IoT Project
 ## Dependencies
 - paho-mqtt
 - numpy
