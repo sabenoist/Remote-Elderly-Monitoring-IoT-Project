@@ -1,1 +1,7 @@
-# SU_Internet_Of_Things
+# Dependencies
+- paho-mqtt
+- numpy
+- pandas
+- scikit-learn
+- flask
+- pandas-highcharts
