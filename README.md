@@ -1,4 +1,5 @@
-# Dependencies
+# Internet of Things Dashboard Project
+## Dependencies
 - paho-mqtt
 - numpy
 - pandas
