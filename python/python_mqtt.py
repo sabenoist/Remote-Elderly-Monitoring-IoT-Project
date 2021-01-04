@@ -27,7 +27,9 @@ def on_subscribe(client, userdata, mid, granted_qos):  # subscribe to mqtt broke
     print("Subscribed", userdata)
 
 def on_message(client, userdata, message):  # get message from mqtt broker 
-    print("New message received: ", str(message.payload.decode("utf-8")), "Topic : %s ", message.topic, "Retained : %s", message.retain)
+    # print("New message received: ", str(message.payload.decode("utf-8")), "Topic : %s ", message.topic, "Retained : %s", message.retain)
+    frame = parse_msg(str(message.payload.decode("utf-8")))
+    print(frame)
 
 def connectToMqtt():  # connect to MQTT broker main function
     print("Connecting to MQTT broker")
@@ -42,6 +44,19 @@ def connectToMqtt():  # connect to MQTT broker main function
     ret = client.subscribe(topic, qos=0)
     print("Subscribed return = " + str(ret))
     client.on_message = on_message
+
+def parse_msg(msg):
+	data_dict = {}
+	msg = msg.split(";")
+
+	for data in msg:
+		data = data.strip().split(",")
+		data_dict[data[0]] = float(data[1])
+
+	frame = [data_dict["resting heart rate"], data_dict["cholestrol"], data_dict["fasting blood sugar"], data_dict["maximum heart rate"], data_dict["body temperature"], data_dict["bloodpressure"]]
+
+	return frame
+
 
 connectToMqtt()  # connect to mqtt broker
 client.loop_forever()
