@@ -7,7 +7,7 @@ broker = "127.0.0.1"
 broker_port = 1883
 webserver = "127.0.0.1"
 webserver_port = 5000
-webserver_route = "/api/add_message/"
+webserver_route = "/data/"
 client = paho.Client("local")
 topic = "sensor_001"
 
@@ -16,6 +16,7 @@ undercooling = 35
 high_blood_pressure = 160
 low_blood_pressure = 50
 
+name = "John"
 age = 63
 sex = 1 # male
 
@@ -91,7 +92,7 @@ def possible_emergency(frame):
 def send_to_webclient(frame):
     data_json = frame.to_json(orient = "split") # making dataframe to json
 
-    url = "http://" + webserver + ":" + str(webserver_port) + webserver_route # url to the server here 
+    url = "http://" + webserver + ":" + str(webserver_port) + webserver_route + name # url to the server here 
     print(url)
     try:
         r = requests.post(url, json = data_json) # could replace 'json' with 'data'. for more info: https://www.w3schools.com/python/ref_requests_post.asp
