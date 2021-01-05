@@ -136,6 +136,8 @@ font-size: 50px;background-color: rgb(3, 89, 45);text-shadow: rgb(255, 255, 255)
     <!--Cholesterol Level-->
 <div id = "Cholesterol" style = "width: 500px; height: 400px;"></div>
 	 	   <script language = "JavaScript">
+	 	   //$(document).ready(function() {
+	 	   // var options = {
      Highcharts.chart('Cholesterol', {
 
     chart: {
@@ -230,7 +232,17 @@ font-size: 50px;background-color: rgb(3, 89, 45);text-shadow: rgb(255, 255, 255)
     }]
 
 },
-// Add some life
+// import data
+/*
+var gauge1;
+$.getJSON('http://www.json-generator.com/api/json/get/cejqKqXEjm?indent=2', function(json) {
+  options.chart.renderTo = 'Cholesterol';
+  options.series.push({
+    data: json
+  });
+   gauge1 = new Highcharts.Chart(options);
+});
+*/
 function (chart) {
     if (!chart.renderer.forExport) {
         setInterval(function () {
@@ -380,6 +392,7 @@ function (chart) {
     <div class="chart3" style="border-style: outset;" >
         <div id="HeartRate" style="width: 500px; height: 400px"></div>
    <script language = "JavaScript">
+
 Highcharts.chart('HeartRate', {
     chart: {
         type: 'line',
@@ -488,9 +501,46 @@ Highcharts.chart('HeartRate', {
         }]
     }
 
-}
-);
+});
+  /*
+  $(function () {
+    var options = {
+        chart: {
+            renderTo: 'HeartRate',
+            type: 'spline',
+            shadow: true
+        },
+        title: {
+            text: 'Heart Rate'
+        },
+        subtitle: {
+            text: 'Updated data
+        },
 
+        xAxis: {
+            type: 'datetime',
+            minRange: 1 * 24 * 3600000 // one day
+        },
+        yAxis: {
+            title: {
+                text: 'data'
+            }
+        },
+        legend: {
+            enabled: true
+        },
+        series: [{}]
+    };
+    $.getJSON('http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/BONN/W/measurements.json?start=P1D', function (data) {
+        chart_data = [];
+        $.each(data, function (i, obj) {
+            chart_data.push([Date.parse(obj.timestamp), obj.value]);
+        });
+        options.series[0].data = chart_data;
+        var chart = new Highcharts.Chart(options);
+    });
+});
+*/
 </script>
     </div>
 
