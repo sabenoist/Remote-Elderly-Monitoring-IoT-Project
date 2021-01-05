@@ -24,8 +24,9 @@ if __name__ == '__main__':
 # Yazz added things here that she does not fully understand
 # plese read this for more info: https://stackoverflow.com/questions/20001229/how-to-get-posted-json-in-flask
 # I used the example in the second answer
-@app.route('/api/add_message/<uuid>', methods=['GET', 'POST'])
-def add_message(uuid):
+@app.route('/api/add_message/', methods=['GET', 'POST'])
+def add_message():
     content = request.json # the json should here be put in the content variable
-    print content['mytext'] # this is where things are done with the json - this was just an example
-    return jsonify({"uuid":uuid}) # not sure if this is needed?
+    print (content['mytext']) # this is where things are done with the json - this was just an example
+    # return jsonify({"uuid":uuid}) # not sure if this is needed?
+    return('', 200)
