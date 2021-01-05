@@ -1,7 +1,10 @@
+from sklearn.naive_bayes import GaussianNB
 import pandas as pd
 import paho.mqtt.client as paho
 import time
-import requests # this is new -- used in 'send_to_webclient'
+import requests
+import pickle 
+import sys
 
 broker = "127.0.0.1"
 broker_port = 1883
@@ -41,7 +44,6 @@ def on_subscribe(client, userdata, mid, granted_qos):  # subscribe to mqtt broke
     print("Subscribed", userdata)
 
 def on_message(client, userdata, message):  # get message from mqtt broker
-    # print("New message received: ", str(message.payload.decode("utf-8")), "Topic : %s ", message.topic, "Retained : %s", message.retain)
     frame = parse_msg(str(message.payload.decode("utf-8")))
 
     if (heart_attack(frame[0:4]) or possible_emergency(frame[4:])):
@@ -53,9 +55,8 @@ def on_message(client, userdata, message):  # get message from mqtt broker
 
     send_to_webclient(frame_msg)
 
-def connectToMqtt():  # connect to MQTT broker main function
+def connect_to_mqtt():  # connect to MQTT broker main function
     print("Connecting to MQTT broker")
-    # client.username_pw_set(username="", password="")
     client.on_log = on_log
     client.on_connect = on_connect
     client.on_publish = on_publish
@@ -79,7 +80,8 @@ def parse_msg(msg):
 	return frame
 
 def heart_attack(frame):
-	return False
+    prediction = classifier.predict([[age] + [sex] + frame])
+    return prediction
 
 def possible_emergency(frame):
 	if frame[0] < undercooling or frame[0] > dangerous_fever:
@@ -100,6 +102,18 @@ def send_to_webclient(frame):
     except Exception as e:
         print("Flask related exception: " + str(e))
 
+def load_classifier():
+    print("Loading classifier from gaussian_bayes_model pickle file")
 
-connectToMqtt()  # connect to mqtt broker
+    try:
+        global classifier
+        classifier = pickle.load(open("gaussian_bayes_model", 'rb'))
+        print("Finished loading classifier")
+    except Exception as e:
+        print("Error: could not find or load gaussian_bayes_model pickle file.")
+        sys.exit()
+
+
+load_classifier()
+connect_to_mqtt()  # connect to mqtt broker
 client.loop_forever()
