@@ -1,9 +1,13 @@
 import pandas as pd
 import paho.mqtt.client as paho
 import time
+import requests # this is new -- used in 'send_to_webclient'
 
 broker = "127.0.0.1"
-port = 1883
+broker_port = 1883
+webserver = "127.0.0.1"
+webserver_port = 5000
+webserver_route = "/data/"
 client = paho.Client("local")
 topic = "sensor_001"
 
@@ -12,6 +16,7 @@ undercooling = 35
 high_blood_pressure = 160
 low_blood_pressure = 50
 
+name = "John"
 age = 63
 sex = 1 # male
 
@@ -35,7 +40,7 @@ def on_publish(client, userdata, mid):  # publish to mqtt broker
 def on_subscribe(client, userdata, mid, granted_qos):  # subscribe to mqtt broker
     print("Subscribed", userdata)
 
-def on_message(client, userdata, message):  # get message from mqtt broker 
+def on_message(client, userdata, message):  # get message from mqtt broker
     # print("New message received: ", str(message.payload.decode("utf-8")), "Topic : %s ", message.topic, "Retained : %s", message.retain)
     frame = parse_msg(str(message.payload.decode("utf-8")))
 
@@ -56,7 +61,7 @@ def connectToMqtt():  # connect to MQTT broker main function
     client.on_publish = on_publish
     client.on_subscribe = on_subscribe
 
-    client.connect(broker, port, keepalive=600)
+    client.connect(broker, broker_port, keepalive=600)
     ret = client.subscribe(topic, qos=0)
     print("Subscribed return = " + str(ret))
     client.on_message = on_message
@@ -85,7 +90,15 @@ def possible_emergency(frame):
 		return False
 
 def send_to_webclient(frame):
-	print(frame)
+    data_json = frame.to_json(orient = "split") # making dataframe to json
+
+    url = "http://" + webserver + ":" + str(webserver_port) + webserver_route + name # url to the server here 
+    print(url)
+    try:
+        r = requests.post(url, json = data_json) # could replace 'json' with 'data'. for more info: https://www.w3schools.com/python/ref_requests_post.asp
+        print("Flask webserver: " + str(r))
+    except Exception as e:
+        print("Flask related exception: " + str(e))
 
 
 connectToMqtt()  # connect to mqtt broker
