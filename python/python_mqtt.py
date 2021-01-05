@@ -1,6 +1,7 @@
 import pandas as pd
 import paho.mqtt.client as paho
 import time
+import requests # this is new -- used in 'send_to_webclient'
 
 broker = "127.0.0.1"
 port = 1883
@@ -35,7 +36,7 @@ def on_publish(client, userdata, mid):  # publish to mqtt broker
 def on_subscribe(client, userdata, mid, granted_qos):  # subscribe to mqtt broker
     print("Subscribed", userdata)
 
-def on_message(client, userdata, message):  # get message from mqtt broker 
+def on_message(client, userdata, message):  # get message from mqtt broker
     # print("New message received: ", str(message.payload.decode("utf-8")), "Topic : %s ", message.topic, "Retained : %s", message.retain)
     frame = parse_msg(str(message.payload.decode("utf-8")))
 
@@ -85,6 +86,11 @@ def possible_emergency(frame):
 		return False
 
 def send_to_webclient(frame):
+    data_json = frame.to_json(orient = "split") # making dataframe to json
+
+    url = "url" # url to the server here 
+    r = requests.post(url, json = data_json) # could replace 'json' with 'data'. for more info: https://www.w3schools.com/python/ref_requests_post.asp
+
 	print(frame)
 
 
