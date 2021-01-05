@@ -1,3 +1,4 @@
+import pandas as pd
 import paho.mqtt.client as paho
 import time
 
@@ -38,12 +39,14 @@ def on_message(client, userdata, message):  # get message from mqtt broker
     # print("New message received: ", str(message.payload.decode("utf-8")), "Topic : %s ", message.topic, "Retained : %s", message.retain)
     frame = parse_msg(str(message.payload.decode("utf-8")))
 
-    if (heart_attack(frame[0:5]) or possible_emergency(frame[5:])):
+    if (heart_attack(frame[0:4]) or possible_emergency(frame[4:])):
     	frame.append(1) # emergency
     else:
     	frame.append(0) # no emergency
 
-    print(frame)
+    frame_msg = pd.DataFrame(data=[frame], columns=["resting heart rate", "cholestrol", "fasting blood sugar", "maximum heart rate", "body temperature", "bloodpressure", "emergency"])
+
+    send_to_webclient(frame_msg)
 
 def connectToMqtt():  # connect to MQTT broker main function
     print("Connecting to MQTT broker")
@@ -80,6 +83,9 @@ def possible_emergency(frame):
 		return True
 	else:
 		return False
+
+def send_to_webclient(frame):
+	print(frame)
 
 
 connectToMqtt()  # connect to mqtt broker
