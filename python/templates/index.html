@@ -690,59 +690,70 @@ function popupWin()
 
 
 </div>
+<script>
+    function parseTime( t ) {
+   var d = new Date();
+   var time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
+   d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
+   d.setMinutes( parseInt( time[2]) || 0 );
+   return d;
+}
 
+
+</script>
 
  <div id="a"></div>
 <script>
+
+
 $(function () {
-    $.getJSON('http://127.0.0.1:5000/data/cholestrol/', function(data) {
-
-    	$('#a').highcharts({
-
-		    chart: {
-		        type:  'spline'
-		    },
-
-		    title: {
-		        text: 'cholestrol'
-		    },
-
-
-		    xAxis: {
-		        type: 'timestamp'
-		    },
-
-		    yAxis: {
-		        title: {
-		            text: data
-		        }
-
-		    },
-
-		     tooltip: {
-        enabled: false
-    },
-
-
-		    legend: {
-		        enabled: false
-		    },
-
-		    series: [{
-
-		    }]
-
-		});
+    var options = {
+        chart: {
+            renderTo: 'a',
+            type: 'spline',
+            shadow: true
+        },
+        title: {
+            text: 'Water level of the last xx days'
+        },
+        subtitle: {
+            text: 'Measured in xxxx'
+        },
+        credits: {
+            text: 'Data',
+            href: 'link'
+        },
+        xAxis: {
+             type: 'date',
+            minRange: 1 * 24 * 3600000 // one day
+        },
+        yAxis: {
+            title: {
+                text: 'data'
+            }
+        },
+        legend: {
+            enabled: true
+        },
+        series: [{}]
+    };
+    $.getJSON('http://time.jsontest.com/', function (data) {
+        chart_data = [];
+        $.each(data, function (i, obj) {
+            chart_data.push(Date.parse(obj.time), obj.milliseconds_since_epoch);
+        });
+        options.series[0].data = chart_data;
+        var chart = new Highcharts.Chart(options);
     });
-
 });
+
 </script>
 
 <div id="b"></div>
 
  <script language = "JavaScript">
-$(function () {
-    $.getJSON('http://127.0.0.1:5000/data/cholestrol/', function(data) {
+ $(function () {
+    $.getJSON('http://127.0.0.1:5000/data/cholestrol/', function (data) {
 
     	$('#b').highcharts({
 
@@ -814,7 +825,81 @@ $(function () {
     });
 
 });
-
 </script>
+
+<div id="c"></div>
+    <script>
+        var options,
+  chart;
+
+$(document).ready(function() {
+  options = {
+    chart: {
+      renderTo: 'c',
+      defaultSeriesType: 'spline',
+      events: {
+        load: requestData
+      }
+    },
+    title: {
+      text: 'ENCLOSURE1'
+    },
+    xAxis: {
+      type: 'datetime',
+      tickPixelInterval: 150,
+      //	maxZoom: (6 * 60 * 24) * 10000
+    },
+    yAxis: {
+      //	min: 10,
+      //	max: 35,
+      title: {
+        text: 'graden celcius',
+        margin: 10
+      }
+    },
+    series: [{
+      name: 'temperatuur',
+      data: []
+    }, {
+      name: 'humidity',
+      type: 'column',
+      data: []
+    }]
+  };
+
+  $.getJSON('http://127.0.0.1:5000/data/cholestrol/', function(data) {
+    options.series[0].data = data;
+
+    $.getJSON('http://127.0.0.1:5000/data/cholestrol/', function(data) {
+      options.series[1].data = data;
+
+      chart = new Highcharts.Chart(options);
+    });
+  });
+});
+
+function requestData() {
+  $.ajax({
+    url: 'http://127.0.0.1:5000/data/cholestrol/',
+    success: function(point) {
+      // print last execution time for debugging
+      var d = new Date(),
+        n = d.toLocaleTimeString(),
+        series = options.series[0],
+        shift = series.data.length > (6 * 60 * 24); // shift if the series is longer
+
+
+      n = n + "\t" + point[0] + "\t" + point[1];
+      //	document.getElementById("debug").innerHTML = n;
+      //	options.series[0].addPoint([point[0],point[1]],true,shift);
+      chart.series[0].addPoint(point[0], true, shift);
+
+      // call it again after nr of ms
+      //setTimeout(requestData, 10000);
+    },
+    cache: false
+  });
+}
+    </script>
 </body>
 </html>
