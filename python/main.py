@@ -3,9 +3,11 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS, cross_origin
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 resting_heart_rate = 0
 cholestrol = 0
