@@ -388,10 +388,14 @@ font-size: 50px;background-color: rgb(3, 89, 45);text-shadow: rgb(255, 255, 255)
 
             var chartFunction = function() {
                var chart = $('#chart3').highcharts();
+               var point;
+
                $.getJSON("http://127.0.0.1:5000/data/resting_heart_rate/", function(heart_rate) {
                   chart.series[0].addPoint(heart_rate, true, true);
+
                });
             };
+
             // Bring life to the dials
             setInterval(chartFunction, 3000);
          });
