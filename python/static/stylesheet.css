@@ -1,0 +1,32 @@
+body {
+   background-image: url('https://www.frontiers.health/wp-content/uploads/2019/10/elderly-care.jpg');
+   background-repeat: no-repeat;
+   border-style: ridge;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.6fr 1.2fr 1.2fr;
+  grid-template-rows: 1fr 1.2fr 0.8fr;
+  gap: 10px 10px;
+  grid-template-areas:
+    "name title title"
+    "sideBar graph1 graph2"
+    "sideBar graph3 graph4";
+}
+
+.name { grid-area: name; }
+
+.sideBar { grid-area: sideBar; }
+
+.title { grid-area: title; }
+
+.graph { width:500px; height: 400px; border-style: outset;}
+
+#graph_cholestrol { grid-area: graph1 }
+
+#graph_blood_sugar { grid-area: graph2; }
+
+#graph_heart_rate { grid-area: graph3; }
+
+#graph_body_temperature { grid-area: graph4; }
