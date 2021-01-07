@@ -516,7 +516,21 @@ font-size: 50px;background-color: rgb(3, 89, 45);text-shadow: rgb(255, 255, 255)
 
 </div>
 
+<script>
+  var a = 5;
+  if (a>2)
+       {
+        popupWin();
+        window.onload=popupWin;
+       }
 
+  function popupWin()
+ {
+
+  window.open('alert' , 'newWin','width=1000,height=500');
+
+  }
+</script>
 
 
 </body>
