@@ -59,8 +59,17 @@ body {
 
   <div class="sideBar" style="margin-left:15px;color: rgb(255, 255, 255);text-shadow: rgb(44, 115, 16) -1px 2px 16px;">
       <p id="date" ></p>
+       <p id="time" ></p>
 <script>
-document.getElementById("date").innerHTML = Date();
+var d = new Date();
+document.getElementById("date").innerHTML = d.toDateString();
+
+var myVar = setInterval(myTimer, 1000);
+
+function myTimer() {
+  var d = new Date();
+  document.getElementById("time").innerHTML = d.toLocaleTimeString();
+}
 </script>
   </div>
 
@@ -512,7 +521,21 @@ font-size: 50px;background-color: rgb(3, 89, 45);text-shadow: rgb(255, 255, 255)
 
 </div>
 
+<script>
+  var a = 5;
+  if (a>2)
+       {
+        popupWin();
+        window.onload=popupWin;
+       }
 
+  function popupWin()
+ {
+
+  window.open('alert' , 'newWin','width=1000,height=500');
+
+  }
+</script>
 
 
 </body>
