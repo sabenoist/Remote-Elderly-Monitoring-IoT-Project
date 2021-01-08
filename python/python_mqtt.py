@@ -21,7 +21,7 @@ low_blood_pressure = 50
 
 name = "Smith"
 age = 63
-sex = 0 # male
+gender = 0 # male
 
 
 def on_log(client, userdata, level, buff):
@@ -53,7 +53,11 @@ def on_message(client, userdata, message):
     else:
     	frame.append(0) # no emergency
 
-    frame_msg = pd.DataFrame(data=[frame], columns=["resting heart rate", "cholestrol", "fasting blood sugar", "maximum heart rate", "body temperature", "bloodpressure", "emergency"])
+    frame.append(name)
+    frame.append(gender)
+    frame.append(age)
+
+    frame_msg = pd.DataFrame(data=[frame], columns=["resting heart rate", "cholestrol", "fasting blood sugar", "maximum heart rate", "body temperature", "bloodpressure", "emergency", "name", "gender", "age"])
 
     send_to_webclient(frame_msg)
 
@@ -88,7 +92,7 @@ def parse_msg(msg):
 
 
 def heart_attack(frame):
-    prediction = classifier.predict([[age] + [sex] + frame])
+    prediction = classifier.predict([[age] + [gender] + frame])
     return prediction
 
 
