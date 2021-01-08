@@ -26,6 +26,7 @@ sex = 1 # male
 def on_log(client, userdata, level, buff):  # mqtt logs function
     print(buff)
 
+
 def on_connect(client, userdata, flags, rc):  # connect to mqtt broker function
     if rc == 0:
         client.connected_flag = True  # set flags
@@ -34,14 +35,18 @@ def on_connect(client, userdata, flags, rc):  # connect to mqtt broker function
         print("Bad connection returned code = " + str(rc))
         client.loop_stop()
 
+
 def on_disconnect(client, userdata, rc):  # disconnect to mqtt broker function
     print("Client disconnected OK")
 
-def on_publish(client, userdata, mid):  # publish to mqtt broker
-    print("In on_pub callback mid=" + str(mid))
+
+# def on_publish(client, userdata, mid):  # publish to mqtt broker
+#     print("In on_pub callback mid=" + str(mid))
+
 
 def on_subscribe(client, userdata, mid, granted_qos):  # subscribe to mqtt broker
     print("Subscribed", userdata)
+
 
 def on_message(client, userdata, message):  # get message from mqtt broker
     frame = parse_msg(str(message.payload.decode("utf-8")))
@@ -55,17 +60,23 @@ def on_message(client, userdata, message):  # get message from mqtt broker
 
     send_to_webclient(frame_msg)
 
-def connect_to_mqtt():  # connect to MQTT broker main function
-    print("Connecting to MQTT broker")
-    client.on_log = on_log
-    client.on_connect = on_connect
-    client.on_publish = on_publish
-    client.on_subscribe = on_subscribe
 
-    client.connect(broker, broker_port, keepalive=600)
-    ret = client.subscribe(topic, qos=0)
-    print("Subscribed return = " + str(ret))
-    client.on_message = on_message
+def connect_to_mqtt():  # connect to MQTT broker main function
+    try:
+        print("Connecting to MQTT broker")
+        client.on_log = on_log
+        client.on_connect = on_connect
+        # client.on_publish = on_publish
+        client.on_subscribe = on_subscribe
+
+        client.connect(broker, broker_port, keepalive=600)
+        ret = client.subscribe(topic, qos=0)
+        print("Subscribed return = " + str(ret))
+        client.on_message = on_message
+        return True
+    except Exception as e:
+        return False
+
 
 def parse_msg(msg):
 	data_dict = {}
@@ -79,9 +90,11 @@ def parse_msg(msg):
 
 	return frame
 
+
 def heart_attack(frame):
     prediction = classifier.predict([[age] + [sex] + frame])
     return prediction
+
 
 def possible_emergency(frame):
 	if frame[0] < undercooling or frame[0] > dangerous_fever:
@@ -90,6 +103,7 @@ def possible_emergency(frame):
 		return True
 	else:
 		return False
+
 
 def send_to_webclient(frame):
     data_json = frame.to_json(orient = "split") # making dataframe to json
@@ -101,6 +115,7 @@ def send_to_webclient(frame):
         print("Flask webserver: " + str(r))
     except Exception as e:
         print("Flask related exception: " + str(e))
+
 
 def load_classifier():
     print("Loading classifier from gaussian_bayes_model pickle file")
@@ -114,6 +129,11 @@ def load_classifier():
         sys.exit()
 
 
-load_classifier()
-connect_to_mqtt()  # connect to mqtt broker
-client.loop_forever()
+if __name__ == '__main__':
+    load_classifier()
+
+    while(not connect_to_mqtt()): # connect to mqtt broker
+        print("Error: could not connect to the MQTT broker at " + broker + ":" + str(broker_port) + ". Make sure that the MQTT broker is running!\nRetrying in 5 seconds.")
+        time.sleep(5)
+    
+    client.loop_forever()
