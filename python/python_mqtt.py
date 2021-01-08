@@ -19,36 +19,33 @@ undercooling = 35
 high_blood_pressure = 160
 low_blood_pressure = 50
 
-name = "John"
+name = "Smith"
 age = 63
-sex = 1 # male
+sex = 0 # male
 
-def on_log(client, userdata, level, buff):  # mqtt logs function
+
+def on_log(client, userdata, level, buff):
     print(buff)
 
 
-def on_connect(client, userdata, flags, rc):  # connect to mqtt broker function
+def on_connect(client, userdata, flags, rc): 
     if rc == 0:
-        client.connected_flag = True  # set flags
+        client.connected_flag = True 
         print("Connected Info")
     else:
         print("Bad connection returned code = " + str(rc))
         client.loop_stop()
 
 
-def on_disconnect(client, userdata, rc):  # disconnect to mqtt broker function
+def on_disconnect(client, userdata, rc): 
     print("Client disconnected OK")
 
 
-# def on_publish(client, userdata, mid):  # publish to mqtt broker
-#     print("In on_pub callback mid=" + str(mid))
-
-
-def on_subscribe(client, userdata, mid, granted_qos):  # subscribe to mqtt broker
+def on_subscribe(client, userdata, mid, granted_qos): 
     print("Subscribed", userdata)
 
 
-def on_message(client, userdata, message):  # get message from mqtt broker
+def on_message(client, userdata, message):  
     frame = parse_msg(str(message.payload.decode("utf-8")))
 
     if (heart_attack(frame[0:4]) or possible_emergency(frame[4:])):
@@ -61,12 +58,11 @@ def on_message(client, userdata, message):  # get message from mqtt broker
     send_to_webclient(frame_msg)
 
 
-def connect_to_mqtt():  # connect to MQTT broker main function
+def connect_to_mqtt(): 
     try:
         print("Connecting to MQTT broker")
         client.on_log = on_log
         client.on_connect = on_connect
-        # client.on_publish = on_publish
         client.on_subscribe = on_subscribe
 
         client.connect(broker, broker_port, keepalive=600)
@@ -106,12 +102,11 @@ def possible_emergency(frame):
 
 
 def send_to_webclient(frame):
-    data_json = frame.to_json(orient = "split") # making dataframe to json
+    data_json = frame.to_json(orient = "split")
 
-    url = "http://" + webserver + ":" + str(webserver_port) + webserver_route + name # url to the server here 
-    print(url)
+    url = "http://" + webserver + ":" + str(webserver_port) + webserver_route
     try:
-        r = requests.post(url, json = data_json) # could replace 'json' with 'data'. for more info: https://www.w3schools.com/python/ref_requests_post.asp
+        r = requests.post(url, json = data_json) 
         print("Flask webserver: " + str(r))
     except Exception as e:
         print("Flask related exception: " + str(e))

@@ -53,8 +53,8 @@ def get_blood_pressure():
 def get_emergency():
     return jsonify(emergency)
 
-@app.route('/data/<name>', methods=['POST'])
-def add_message(name):
+@app.route('/data/', methods=['POST'])
+def add_message():
     content = request.json
     loaded_json = json.loads(content)
 
@@ -73,7 +73,7 @@ def add_message(name):
     global emergency
     emergency = loaded_json["data"][0][6]
     
-    return (name, 200)
+    return ('Ok', 200)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
