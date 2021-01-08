@@ -9,43 +9,42 @@ $(document).ready(function() {
    var title = {
       text: 'Cholesterol Level'
    };
-      var pane = {
-      startAngle: -150,
-      endAngle: 150,
-      background: [
-         {
-            backgroundColor: {
-               linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-               stops: [
-                  [0, '#FFF'],
-                  [1, '#333']
-               ]
-            },
-            borderWidth: 0,
-            outerRadius: '109%'
+   var pane = {
+   startAngle: -150,
+   endAngle: 150,
+   background: [
+      {
+         backgroundColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+               [0, '#FFF'],
+               [1, '#333']
+            ]
          },
-         {
-            backgroundColor: {
-               linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-               stops: [
-                  [0, '#333'],
-                  [1, '#FFF']
-               ]
-            },
-            borderWidth: 1,
-            outerRadius: '107%'
+         borderWidth: 0,
+         outerRadius: '109%'
+      },
+      {
+         backgroundColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+               [0, '#333'],
+               [1, '#FFF']
+            ]
          },
-         {
-            // default background
-         },
-         {
-            backgroundColor: '#DDD',
-            borderWidth: 0,
-            outerRadius: '105%',
-            innerRadius: '113%'
-         }
-      ]
-   };
+         borderWidth: 1,
+         outerRadius: '107%'
+      },
+      {
+         // default background
+      },
+      {
+         backgroundColor: '#DDD',
+         borderWidth: 0,
+         outerRadius: '105%',
+         innerRadius: '113%'
+      }
+   ]};
 
    // the value axis
    var yAxis = {
@@ -109,7 +108,6 @@ $(document).ready(function() {
    json.yAxis = yAxis;
    json.series = series;
 
-   // Add some life
    var chartFunction = function (chart) {
       if (!chart.renderer.forExport) {
          setInterval(function () {

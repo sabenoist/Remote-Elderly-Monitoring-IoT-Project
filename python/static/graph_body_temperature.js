@@ -25,7 +25,6 @@ $(document).ready(function() {
       enabled: false
    };
 
-   // the value axis
    var yAxis = {
       stops: [
          [0.01, '#DF5353'], // red
@@ -87,7 +86,6 @@ $(document).ready(function() {
 
 
    var chartFunction = function() {
-      // temperature
       var chart = $('#graph_body_temperature').highcharts();
       var point;
 
@@ -98,6 +96,5 @@ $(document).ready(function() {
       });
    };
 
-   // Bring life to the dials
    setInterval(chartFunction, 3000);
 });

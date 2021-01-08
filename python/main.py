@@ -1,7 +1,3 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS, cross_origin
 import json
@@ -14,7 +10,7 @@ cholestrol = 0
 fasting_blood_sugar = 0
 maximum_heart_rate = 0
 body_temperature = 0
-bloodpressure = 0
+blood_pressure = 0
 emergency = 0
 
 @app.route('/')
@@ -49,9 +45,9 @@ def get_maximum_heart_rate():
 def get_body_temperature():
     return jsonify(body_temperature)
 
-@app.route('/data/bloodpressure/', methods=['GET'])
-def get_bloodpressure():
-    return jsonify(bloodpressure)
+@app.route('/data/blood_pressure/', methods=['GET'])
+def get_blood_pressure():
+    return jsonify(blood_pressure)
 
 @app.route('/data/emergency/', methods=['GET'])
 def get_emergency():
@@ -72,8 +68,8 @@ def add_message(name):
     maximum_heart_rate = loaded_json["data"][0][3]
     global body_temperature
     body_temperature = loaded_json["data"][0][4]
-    global bloodpressure
-    bloodpressure = loaded_json["data"][0][5]
+    global blood_pressure
+    blood_pressure = loaded_json["data"][0][5]
     global emergency
     emergency = loaded_json["data"][0][6]
     

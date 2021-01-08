@@ -1,6 +1,6 @@
 $(document).ready(function() {
    var title = {
-      text: 'Resting Heart Rate'
+      text: 'Blood Pressure'
    };
    var subtitle = {
    };
@@ -11,7 +11,7 @@ $(document).ready(function() {
    };
    var yAxis = {
       title: {
-         text: 'resting heart rate (bpm)'
+         text: 'blood pressure (mmHg)'
       },
       plotLines: [{
          value: 0,
@@ -20,7 +20,7 @@ $(document).ready(function() {
       }]
    };
    var tooltip = {
-      valueSuffix: 'beats/min'
+      valueSuffix: 'average mmHg/min'
    }
    var legend = {
       layout: 'vertical',
@@ -29,7 +29,7 @@ $(document).ready(function() {
       borderWidth: 0
    };
    var series =  [{
-         name: 'beats/min',
+         name: 'average mmHg/min',
          data: [0,0,0,0,0,0,0,0,0,0,0,0]
       },
    ];
@@ -44,12 +44,12 @@ $(document).ready(function() {
    json.series = series;
 
 
-   $('#graph_heart_rate').highcharts(json);
-   $('#graph_heart_rate').highcharts().xAxis.visible = false;
+   $('#graph_blood_pressure').highcharts(json);
+   $('#graph_blood_pressure').highcharts().xAxis.visible = false;
 
    var chartFunction = function() {
-      var chart = $('#graph_heart_rate').highcharts();
-      $.getJSON("http://127.0.0.1:5000/data/resting_heart_rate/", function(heart_rate) {
+      var chart = $('#graph_blood_pressure').highcharts();
+      $.getJSON("http://127.0.0.1:5000/data/blood_pressure/", function(heart_rate) {
          chart.series[0].addPoint(heart_rate, true, true);
       });
    };

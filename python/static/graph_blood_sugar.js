@@ -112,7 +112,6 @@ $(document).ready(function() {
    json.yAxis = yAxis;
    json.series = series;
 
-   // Add some life
    var chartFunction = function (chart) {
       if (!chart.renderer.forExport) {
          setInterval(function () {
