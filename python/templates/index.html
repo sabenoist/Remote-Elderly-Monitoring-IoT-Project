@@ -16,13 +16,20 @@
    </div>
 
    <div class="body_container">
-      <div class="side_bar">
+      <div id="side_bar">
+         <img id="doctor_image" src="{{url_for('static', filename='doctor.png')}}">
+
          <h1>Welcome </h1>
          <h2 id="name">Mr./Ms. NAME</h2>
          <h2 id="age">Age: #</h2>
          <p id="date" ></p>
          <p id="time" ></p>
          <script src="{{url_for('static', filename='side_bar.js')}}"></script>
+
+         <div id="alarm">
+            <img id="alarm_image" src="{{url_for('static', filename='emergency.png')}}">
+            <script src="{{url_for('static', filename='emergency_alert.js')}}"></script>
+         </div>
       </div>
 
       <div class="graphs_container"> 

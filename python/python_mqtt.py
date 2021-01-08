@@ -121,7 +121,7 @@ def load_classifier():
 
     try:
         global classifier
-        classifier = pickle.load(open("gaussian_bayes_model", 'rb'))
+        classifier = pickle.load(open("gaussian_bayes_model.pickle", 'rb'))
         print("Finished loading classifier")
     except Exception as e:
         print("Error: could not find or load gaussian_bayes_model pickle file.")
