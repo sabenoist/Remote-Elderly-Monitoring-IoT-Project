@@ -18,31 +18,31 @@
    <div class="body_container">
       <div class="side_bar">
          <h1>Welcome </h1>
-         <h2>Mr./Ms. NAME </h2>
-         <h2>Age: #</h2>
+         <h2 id="name">Mr./Ms. NAME</h2>
+         <h2 id="age">Age: #</h2>
          <p id="date" ></p>
          <p id="time" ></p>
          <script src="{{url_for('static', filename='side_bar.js')}}"></script>
       </div>
 
       <div class="graphs_container"> 
-         <div class="graph" id="graph_cholestrol" style="width:300px; height: 300px;">
+         <div class="graph" id="graph_cholestrol">
             <script src="{{url_for('static', filename='graph_cholestrol.js')}}"></script>
          </div>
 
-         <div class="graph" id="graph_blood_sugar" style="width: 300px; height: 300px;">
+         <div class="graph" id="graph_blood_sugar">
             <script src="{{url_for('static', filename='graph_blood_sugar.js')}}"></script>
          </div>
 
-         <div class="graph" id="graph_body_temperature" style="width: 400px; height: 300px;">
+         <div class="graph" id="graph_body_temperature">
             <script src="{{url_for('static', filename='graph_body_temperature.js')}}"></script>
          </div>
 
-         <div class="graph" id="graph_heart_rate" style="width: 500px; height: 300px;" >
+         <div class="graph" id="graph_heart_rate">
             <script src="{{url_for('static', filename='graph_heart_rate.js')}}"></script>
          </div>
 
-         <div class="graph" id="graph_blood_pressure" style="width: 500px; height: 300px;" >
+         <div class="graph" id="graph_blood_pressure">
             <script src="{{url_for('static', filename='graph_blood_pressure.js')}}"></script>
          </div>
       </div>

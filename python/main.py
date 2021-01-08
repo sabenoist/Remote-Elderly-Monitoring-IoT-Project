@@ -104,9 +104,9 @@ def add_message():
     global name
     name = loaded_json["data"][0][7]
     global gender
-    name = loaded_json["data"][0][8]
+    gender = loaded_json["data"][0][8]
     global age
-    name = loaded_json["data"][0][9]
+    age = loaded_json["data"][0][9]
     
     return ('Ok', 200)
 

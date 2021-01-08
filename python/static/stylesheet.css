@@ -3,10 +3,6 @@ html,head,body,h1,p {
   padding: 0;
 }
 
-.main_container {
-
-}
-
 .header {
   width: auto;
   height: 600px;
@@ -73,11 +69,39 @@ html,head,body,h1,p {
 }
 
 .graph { 
-  width: 300px; 
-  height: 300px; 
   border-style: outset; 
   margin-right: 50px;
   margin-bottom: 50px;
   float: left;}
 }
+
+#graph_cholestrol {
+  width: 300px; 
+  height: 300px;
+}
+
+#graph_blood_sugar {
+  width: 300px; 
+  height: 300px;
+}
+
+#graph_body_temperature {
+  width: 400px; 
+  height: 300px;
+}
+
+#graph_heart_rate {
+  width: 529px; 
+  height: 300px;
+}
+
+#graph_blood_pressure {
+  width: 529px; 
+  height: 300px;
+}
+
+
+
+
+
 
