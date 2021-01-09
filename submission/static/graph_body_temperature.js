@@ -2,6 +2,7 @@ $(document).ready(function() {
    var chart = {
       type: 'solidgauge'
    };
+
    var title = {
       text: 'Body Temperature'
       }
@@ -21,6 +22,7 @@ $(document).ready(function() {
          shape: 'arc'
       }
    };
+
    var tooltip = {
       enabled: false
    };
@@ -48,6 +50,7 @@ $(document).ready(function() {
       max: 42,
 
    };
+
    var plotOptions = {
       solidgauge: {
          dataLabels: {
@@ -57,9 +60,11 @@ $(document).ready(function() {
          }
       }
    };
+
    var credits = {
       enabled: false
    };
+
    var series = [{
       name: 'body temperature',
       data: [0],
@@ -83,7 +88,6 @@ $(document).ready(function() {
    json.credits = credits;
    json.series = series;
    $('#graph_body_temperature').highcharts(json);
-
 
    var chartFunction = function() {
       var chart = $('#graph_body_temperature').highcharts();

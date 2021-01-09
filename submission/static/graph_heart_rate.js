@@ -2,13 +2,16 @@ $(document).ready(function() {
    var title = {
       text: 'Resting Heart Rate'
    };
+
    var subtitle = {
    };
+
    var xAxis = {
       labels: {
          enabled: false
       }
    };
+
    var yAxis = {
       title: {
          text: 'resting heart rate (bpm)'
@@ -19,15 +22,22 @@ $(document).ready(function() {
          color: '#808080'
       }]
    };
+
    var tooltip = {
       valueSuffix: 'beats/min'
    }
+
    var legend = {
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
       borderWidth: 0
    };
+
+   var credits = {
+      enabled: false
+   };
+
    var series =  [{
          name: 'beats/min',
          data: [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -42,7 +52,6 @@ $(document).ready(function() {
    json.tooltip = tooltip;
    json.legend = legend;
    json.series = series;
-
 
    $('#graph_heart_rate').highcharts(json);
    $('#graph_heart_rate').highcharts().xAxis.visible = false;

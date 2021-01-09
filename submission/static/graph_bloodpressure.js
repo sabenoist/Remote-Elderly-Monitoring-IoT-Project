@@ -2,13 +2,16 @@ $(document).ready(function() {
    var title = {
       text: 'Blood Pressure'
    };
+
    var subtitle = {
    };
+
    var xAxis = {
       labels: {
          enabled: false
       }
    };
+
    var yAxis = {
       title: {
          text: 'blood pressure (mmHg)'
@@ -19,15 +22,22 @@ $(document).ready(function() {
          color: '#808080'
       }]
    };
+
    var tooltip = {
       valueSuffix: 'average mmHg/min'
    }
+
    var legend = {
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
       borderWidth: 0
    };
+
+   var credits = {
+      enabled: false
+   };
+
    var series =  [{
          name: 'average mmHg/min',
          data: [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -42,7 +52,6 @@ $(document).ready(function() {
    json.tooltip = tooltip;
    json.legend = legend;
    json.series = series;
-
 
    $('#graph_blood_pressure').highcharts(json);
    $('#graph_blood_pressure').highcharts().xAxis.visible = false;

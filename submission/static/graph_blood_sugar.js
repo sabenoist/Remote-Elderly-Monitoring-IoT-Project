@@ -6,9 +6,11 @@ $(document).ready(function() {
       plotBorderWidth: 0,
       plotShadow: false
    };
+
    var title = {
       text: 'Fasting Blood Sugar Level '
    };
+
    var pane = {
    startAngle: -150,
    endAngle: 150,
@@ -98,6 +100,11 @@ $(document).ready(function() {
          }
       ]
    };
+
+   var credits = {
+      enabled: false
+   };
+
    var series = [{
       name: 'fasting blood sugar level ',
       data: [0],
@@ -105,6 +112,7 @@ $(document).ready(function() {
          valueSuffix: ' mg/dL'
       }
    }];
+
    var json = {};
    json.chart = chart;
    json.title = title;
@@ -124,5 +132,6 @@ $(document).ready(function() {
          }, 3000);
       }
    };
+
    $('#graph_blood_sugar').highcharts(json,chartFunction);
 });

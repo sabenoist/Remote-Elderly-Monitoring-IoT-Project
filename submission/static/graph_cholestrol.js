@@ -6,13 +6,15 @@ $(document).ready(function() {
       plotBorderWidth: 0,
       plotShadow: false
    };
+
    var title = {
       text: 'Cholesterol Level'
    };
+
    var pane = {
-   startAngle: -150,
-   endAngle: 150,
-   background: [
+      startAngle: -150,
+      endAngle: 150,
+      background: [
       {
          backgroundColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
@@ -94,6 +96,11 @@ $(document).ready(function() {
          }
       ]
    };
+
+   var credits = {
+      enabled: false
+   };
+
    var series = [{
       name: 'Cholesterol Level',
       data: [0],
@@ -101,6 +108,7 @@ $(document).ready(function() {
          valueSuffix: ' mg/dL'
       }
    }];
+
    var json = {};
    json.chart = chart;
    json.title = title;
@@ -120,5 +128,6 @@ $(document).ready(function() {
          }, 3000);
       }
    };
+
    $('#graph_cholestrol').highcharts(json,chartFunction);
 });

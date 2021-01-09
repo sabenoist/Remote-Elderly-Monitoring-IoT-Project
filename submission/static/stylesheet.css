@@ -107,7 +107,7 @@ html,head,body,h1,p {
 }
 
 #graph_body_temperature {
-  width: 400px; 
+  width: 500px; 
   height: 300px;
 }
 
@@ -119,4 +119,8 @@ html,head,body,h1,p {
 #graph_blood_pressure {
   width: 529px; 
   height: 300px;
+}
+
+.highcharts-credits {
+  display: none;
 }
