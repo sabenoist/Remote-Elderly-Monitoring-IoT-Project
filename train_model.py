@@ -50,7 +50,7 @@ def plot_confusion_matrix(y_test, y_pred, normalize=False, title=None, cmap=plt.
 
 if __name__ == '__main__':
 	# load in data
-	heart_attack_df = pd.read_csv("generated_dataset.csv")
+	heart_attack_df = pd.read_csv("heart_attack_dataset.csv")
 
 	# randomize rows to prevent overfitting
 	heart_attack_df = heart_attack_df.sample(frac=1)
